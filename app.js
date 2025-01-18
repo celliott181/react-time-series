@@ -34,7 +34,7 @@ const chartWidth = 600; // Width of the SVG component in pixels
     const sineWaveData$ = getSineWaveData(27, 60);
     const subscription = new Subscription();
 
-    const sub = sineWaveData$.pipe(debounceTime(1000)).subscribe({
+    const sub = sineWaveData$.subscribe({
       next: newPoint => {
         if (newPoint.value !== null) {
           setData(prevData => {
