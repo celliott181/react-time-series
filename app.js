@@ -1,10 +1,8 @@
+const { useEffect, useState } = React;
+const { Subscription, interval } = rxjs;
+const { debounceTime, map } = rxjs.operators;
 
-import { interval } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
-import { useEffect, useState } from "react";
-import { Subscription } from 'rxjs';
-  
-function getSineWaveData(periodInSeconds: number, totalTimeInSeconds: number) {
+function getSineWaveData(periodInSeconds, totalTimeInSeconds) {
   const intervalInMs = 1000; // Emit data points every 1000ms (1 second)
   const totalDataPoints = totalTimeInSeconds;
   const omega = (2 * Math.PI) / periodInSeconds;
@@ -19,13 +17,13 @@ function getSineWaveData(periodInSeconds: number, totalTimeInSeconds: number) {
       value: (value + 1) / 2, // Normalize value between 0 and 1
     })),
     map((data, index) => (index < totalDataPoints ? data : null)),
-    map(data => data ? data : { time: totalTimeInSeconds, value: null }),
+    map(data => (data ? data : { time: totalTimeInSeconds, value: null }))
   );
 }
 
-export const TimeSeries = () => {
+function TimeSeries() {
   const [data, setData] = useState([]);
-const chartWidth = 600; // Width of the SVG component in pixels
+  const chartWidth = 600; // Width of the SVG component in pixels
   const chartHeight = 300; // Height of the SVG component in pixels
   const timeWindow = 10; // Time window in seconds to display
   const pixelsPerSecond = chartWidth / timeWindow; // Pixels per second to scale the x-axis
@@ -68,7 +66,7 @@ const chartWidth = 600; // Width of the SVG component in pixels
             <circle
               key={index}
               cx={xPosition} // Align to the right and shift older points left
-              cy={(1 - point.value!) * chartHeight} // Map value to y-axis
+              cy={(1 - point.value) * chartHeight} // Map value to y-axis
               r="2"
               fill="blue"
             />
