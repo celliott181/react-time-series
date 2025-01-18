@@ -24,10 +24,7 @@ function getSineWaveData(periodInSeconds: number, totalTimeInSeconds: number) {
 }
 
 export const TimeSeries = () => {
-  const [data, setData] = useState<{
-    time: number;
-    value?: number;
-}[]>([]);
+  const [data, setData] = useState([]);
 const chartWidth = 600; // Width of the SVG component in pixels
   const chartHeight = 300; // Height of the SVG component in pixels
   const timeWindow = 10; // Time window in seconds to display
